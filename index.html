@@ -3,93 +3,385 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Group Tools</title>
+
+  <title>HR Tools Portal</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f6f8;
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 80px auto;
-      padding: 30px;
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f8fbff 0%, #f4f7fb 100%);
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid #e5e7eb;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 20px;
+      color: #1f2937;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #eef4ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .topbar-text {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 70px 30px 50px;
+    }
+
+    .hero {
       text-align: center;
+      margin-bottom: 55px;
     }
 
-    h1 {
-      margin-bottom: 10px;
+    .badge {
+      display: inline-block;
+      padding: 7px 14px;
+      background: #eef4ff;
+      border: 1px solid #dbe7ff;
+      border-radius: 999px;
+      color: #315fa8;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
     }
 
-    .subtitle {
-      color: #666;
-      margin-bottom: 40px;
+    .hero h1 {
+      font-size: 42px;
+      line-height: 1.15;
+      margin-bottom: 15px;
+      letter-spacing: -1px;
     }
 
-    .tools {
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: #6b7280;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .section-title {
+      margin-bottom: 20px;
+    }
+
+    .section-title h2 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .section-title p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
     }
 
     .tool-card {
       background: white;
-      padding: 35px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 28px;
       text-decoration: none;
-      color: #222;
-      transition: 0.2s;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      min-height: 245px;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .tool-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      transform: translateY(-5px);
+      box-shadow: 0 18px 45px rgba(31, 41, 55, 0.10);
+      border-color: #cddbf4;
     }
 
-    .tool-card h2 {
-      margin-bottom: 12px;
+    .icon-box {
+      width: 54px;
+      height: 54px;
+      background: #f1f6ff;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      margin-bottom: 24px;
+    }
+
+    .tool-card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
     }
 
     .tool-card p {
-      color: #666;
-      line-height: 1.5;
+      color: #6b7280;
+      line-height: 1.65;
+      font-size: 15px;
+      flex-grow: 1;
+    }
+
+    .open-tool {
+      margin-top: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #315fa8;
+      font-size: 14px;
+    }
+
+    .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .tool-card:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .coming-soon {
+      margin-top: 34px;
+      background: white;
+      border: 1px dashed #d1d5db;
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .coming-soon strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .coming-soon p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .small-badge {
+      white-space: nowrap;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #6b7280;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    footer {
+      max-width: 1100px;
+      margin: 35px auto 0;
+      padding: 25px 30px 35px;
+      text-align: center;
+      color: #9ca3af;
+      font-size: 13px;
+    }
+
+    @media (max-width: 750px) {
+      .topbar {
+        padding: 15px 20px;
+      }
+
+      .topbar-text {
+        display: none;
+      }
+
+      .page {
+        padding: 45px 20px 35px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tool-card {
+        min-height: auto;
+      }
+
+      .coming-soon {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">⚙️</div>
+      <span>HR Tools Portal</span>
+    </div>
 
-  <h1>Group Tools</h1>
+    <div class="topbar-text">
+      Internal productivity tools
+    </div>
+  </header>
 
-  <div class="subtitle">
-    Select the tool you would like to use
-  </div>
 
-  <div class="tools">
+  <main class="page">
 
-    <a href="mohre.html" class="tool-card">
-      <h2>MOHRE Skilled / Unskilled</h2>
+    <section class="hero">
+
+      <div class="badge">
+        HR Digital Tools
+      </div>
+
+      <h1>
+        Simple tools for everyday HR tasks
+      </h1>
+
       <p>
-        Search job titles and check skilled or unskilled classification.
+        Select the tool you would like to use.
+        All tools are available from one central portal and will always reflect
+        the latest available version.
       </p>
-    </a>
 
-    <a href="gratuity.html" class="tool-card">
-      <h2>Gratuity Calculator</h2>
-      <p>
-        Calculate employee gratuity based on service period and salary.
-      </p>
-    </a>
+    </section>
 
-  </div>
 
-</div>
+    <section>
+
+      <div class="section-title">
+        <h2>Available Tools</h2>
+        <p>Select an application below to continue.</p>
+      </div>
+
+
+      <div class="tools-grid">
+
+        <!-- MOHRE TOOL -->
+
+        <a href="./mohre.html" class="tool-card">
+
+          <div class="icon-box">
+            👷
+          </div>
+
+          <h3>
+            MOHRE Skilled / Unskilled
+          </h3>
+
+          <p>
+            Search job titles and identify the relevant MOHRE classification,
+            skill level and skilled or unskilled category.
+          </p>
+
+          <div class="open-tool">
+            Open Tool
+            <span class="arrow">→</span>
+          </div>
+
+        </a>
+
+
+        <!-- GRATUITY TOOL -->
+
+        <a href="./gratuity.html" class="tool-card">
+
+          <div class="icon-box">
+            🧮
+          </div>
+
+          <h3>
+            Gratuity Calculator
+          </h3>
+
+          <p>
+            Calculate employee gratuity using the relevant employment details,
+            service period and applicable salary information.
+          </p>
+
+          <div class="open-tool">
+            Open Calculator
+            <span class="arrow">→</span>
+          </div>
+
+        </a>
+
+      </div>
+
+
+      <div class="coming-soon">
+
+        <div>
+          <strong>More tools can be added here</strong>
+
+          <p>
+            Additional HR, finance, tax and internal productivity applications
+            can be incorporated into this portal in the future.
+          </p>
+        </div>
+
+        <div class="small-badge">
+          Expandable Portal
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    HR Tools Portal
+  </footer>
 
 </body>
 </html>
