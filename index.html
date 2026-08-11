@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>HR Tools Portal</title>
+  <title>HR Digital Tools</title>
 
   <style>
     * {
@@ -53,9 +53,24 @@
       font-size: 22px;
     }
 
-    .topbar-text {
-      color: #6b7280;
-      font-size: 14px;
+    .last-updated {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .last-updated::before {
+      content: "●";
+      color: #22a06b;
+      font-size: 9px;
     }
 
     .page {
@@ -66,7 +81,15 @@
 
     .hero {
       text-align: center;
-      margin-bottom: 55px;
+      margin-bottom: 58px;
+      padding: 42px 28px 38px;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(49,95,168,.10), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(91,141,239,.10), transparent 24%),
+        #ffffff;
+      border: 1px solid #e7edf5;
+      border-radius: 28px;
+      box-shadow: 0 18px 55px rgba(31,41,55,.06);
     }
 
     .badge {
@@ -82,10 +105,10 @@
     }
 
     .hero h1 {
-      font-size: 42px;
-      line-height: 1.15;
-      margin-bottom: 15px;
-      letter-spacing: -1px;
+      font-size: clamp(34px, 5vw, 48px);
+      line-height: 1.08;
+      margin-bottom: 16px;
+      letter-spacing: -1.4px;
     }
 
     .hero p {
@@ -108,6 +131,16 @@
     .section-title p {
       color: #6b7280;
       font-size: 14px;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      color: #315fa8;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
     }
 
     /* HR TOOLS */
@@ -249,6 +282,82 @@
       font-weight: 600;
     }
 
+
+    /* IMPORTANT UAE HR WEBSITES */
+    .websites-section {
+      margin-top: 65px;
+      padding-top: 45px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .website-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .website-card {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 21px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      min-height: 205px;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .website-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 35px rgba(31,41,55,.09);
+      border-color: #cddbf4;
+    }
+
+    .website-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #f1f6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+
+    .website-card h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .website-card p {
+      color: #6b7280;
+      font-size: 13px;
+      line-height: 1.55;
+      flex-grow: 1;
+    }
+
+    .website-card span {
+      margin-top: 18px;
+      color: #315fa8;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .official-badge {
+      display: inline-flex;
+      width: fit-content;
+      margin-bottom: 12px;
+      padding: 4px 8px;
+      background: #edf8f2;
+      color: #18794e;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
     /* COMING SOON */
 
     .coming-soon {
@@ -292,6 +401,12 @@
       font-size: 13px;
     }
 
+    @media (max-width: 1000px) {
+      .website-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 900px) {
       .law-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -303,8 +418,9 @@
         padding: 15px 20px;
       }
 
-      .topbar-text {
-        display: none;
+      .last-updated {
+        font-size: 11px;
+        padding: 6px 9px;
       }
 
       .page {
@@ -320,7 +436,8 @@
       }
 
       .tools-grid,
-      .law-grid {
+      .law-grid,
+      .website-grid {
         grid-template-columns: 1fr;
       }
 
@@ -342,11 +459,11 @@
   <header class="topbar">
     <div class="brand">
       <div class="brand-icon">⚙️</div>
-      <span>HR Tools Portal</span>
+      <span>HR Digital Tools</span>
     </div>
 
-    <div class="topbar-text">
-      Internal productivity tools
+    <div class="last-updated">
+      Last updated: 11 August 2026
     </div>
   </header>
 
@@ -366,8 +483,8 @@
       </h1>
 
       <p>
-        Access useful HR tools, important laws and regulations
-        from one central portal.
+        Your central HR reference hub for practical tools, UAE employment laws,
+        regulations and official government resources.
       </p>
 
     </section>
@@ -378,6 +495,7 @@
     <section>
 
       <div class="section-title">
+        <div class="section-kicker">Digital Utilities</div>
         <h2>Available Tools</h2>
         <p>Select an application below to continue.</p>
       </div>
@@ -453,6 +571,7 @@
     <section class="laws-section">
 
       <div class="section-title">
+        <div class="section-kicker">Reference Library</div>
         <h2>Know the Laws & Regulations</h2>
         <p>
           Access important UAE employment laws, regulations and guidance documents.
@@ -555,11 +674,62 @@
 
     </section>
 
+
+    <section class="websites-section">
+      <div class="section-title">
+        <div class="section-kicker">Official Resources</div>
+        <h2>Important UAE HR Websites</h2>
+        <p>Quick access to official government portals for labour law, employment, pensions, Emiratisation, immigration and DIFC employment regulations.</p>
+      </div>
+
+      <div class="website-grid">
+        <a href="https://www.mohre.gov.ae/en" target="_blank" rel="noopener noreferrer" class="website-card">
+          <div class="website-icon">🏛️</div><div class="official-badge">Official Website</div>
+          <h3>MOHRE</h3><p>Ministry of Human Resources & Emiratisation.</p><span>Visit Website ↗</span>
+        </a>
+
+        <a href="https://uaelegislation.gov.ae/en" target="_blank" rel="noopener noreferrer" class="website-card">
+          <div class="website-icon">⚖️</div><div class="official-badge">Official Website</div>
+          <h3>UAE Legislation</h3><p>Official platform for UAE federal laws, regulations and amendments.</p><span>Visit Website ↗</span>
+        </a>
+
+        <a href="https://gpssa.gov.ae/" target="_blank" rel="noopener noreferrer" class="website-card">
+          <div class="website-icon">🏦</div><div class="official-badge">Official Website</div>
+          <h3>GPSSA</h3><p>General Pension and Social Security Authority.</p><span>Visit Website ↗</span>
+        </a>
+
+        <a href="https://nafis.gov.ae/" target="_blank" rel="noopener noreferrer" class="website-card">
+          <div class="website-icon">🧔🏻‍♂️</div><div class="official-badge">Official Website</div>
+          <h3>Nafis</h3><p>Emiratisation and UAE national employment support platform.</p><span>Visit Website ↗</span>
+        </a>
+
+        <a href="https://icp.gov.ae/en/" target="_blank" rel="noopener noreferrer" class="website-card">
+          <div class="website-icon">🛂</div><div class="official-badge">Official Website</div>
+          <h3>ICP</h3><p>Identity, citizenship, visas and residency services.</p><span>Visit Website ↗</span>
+        </a>
+
+        <a href="https://gdrfad.gov.ae/en" target="_blank" rel="noopener noreferrer" class="website-card">
+          <div class="website-icon">📑</div><div class="official-badge">Official Website</div>
+          <h3>GDRFA Dubai</h3><p>Dubai residency, visa and immigration services.</p><span>Visit Website ↗</span>
+        </a>
+
+        <a href="https://www.difc.com/Business/laws-and-regulations/legal-database" target="_blank" rel="noopener noreferrer" class="website-card">
+          <div class="website-icon">🏙️</div><div class="official-badge">Official Website</div>
+          <h3>DIFC Legal Database</h3><p>DIFC Employment Law, regulations and other DIFC legislation.</p><span>Visit Website ↗</span>
+        </a>
+
+        <a href="https://u.ae/en/information-and-services/jobs/employment-in-the-private-sector/employment-laws-and-regulations-in-the-private-sector" target="_blank" rel="noopener noreferrer" class="website-card">
+          <div class="website-icon">📚</div><div class="official-badge">Official Website</div>
+          <h3>UAE Government Employment Laws</h3><p>Official UAE Government guidance on private-sector employment laws.</p><span>Visit Website ↗</span>
+        </a>
+      </div>
+    </section>
+
   </main>
 
 
   <footer>
-    HR Tools Portal
+    HR Digital Tools
   </footer>
 
 </body>
