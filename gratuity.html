@@ -31,6 +31,33 @@ h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.02em;font-weight:6
 /* numbers, money and dates always read left to right */
 .num,.val,.total,.gauge b,input[type="number"],input[type="date"]{direction:ltr;unicode-bidi:isolate}
 
+
+/* ---------- back to portal ---------- */
+.back-home{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin:16px 0 4px;
+  padding:9px 13px;
+  color:#EAF0EE;
+  background:rgba(255,255,255,.07);
+  border:1px solid #2A565B;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  transition:background .16s,border-color .16s,transform .16s;
+}
+.back-home:hover{
+  background:rgba(255,255,255,.12);
+  border-color:#47747A;
+  transform:translateX(-2px);
+}
+.back-home:focus-visible{
+  outline:2px solid #7FC5D8;
+  outline-offset:2px;
+}
+
 /* ---------- masthead ---------- */
 .masthead{background:var(--ink);color:#EAF0EE;padding:24px 0 0}
 .mast-top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;justify-content:space-between}
@@ -166,6 +193,7 @@ footer p{margin:0;max-width:82ch}
 
 <div class="masthead">
   <div class="wrap">
+    <a href="./index.html" class="back-home" aria-label="Back to HR Tools Portal">← Back to Home</a>
     <div class="mast-top">
       <div class="brand">
         <h1 data-i18n="brand">Gratuity Calculations</h1>
