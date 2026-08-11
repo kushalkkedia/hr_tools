@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group Tools</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .tool-card {
+      background: white;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      text-decoration: none;
+      color: #222;
+      transition: 0.2s;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .tool-card h2 {
+      margin-bottom: 12px;
+    }
+
+    .tool-card p {
+      color: #666;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Group Tools</h1>
+
+  <div class="subtitle">
+    Select the tool you would like to use
+  </div>
+
+  <div class="tools">
+
+    <a href="mohre.html" class="tool-card">
+      <h2>MOHRE Skilled / Unskilled</h2>
+      <p>
+        Search job titles and check skilled or unskilled classification.
+      </p>
+    </a>
+
+    <a href="gratuity.html" class="tool-card">
+      <h2>Gratuity Calculator</h2>
+      <p>
+        Calculate employee gratuity based on service period and salary.
+      </p>
+    </a>
+
+  </div>
+
+</div>
+
+</body>
+</html>
