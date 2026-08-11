@@ -110,6 +110,8 @@
       font-size: 14px;
     }
 
+    /* HR TOOLS */
+
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -130,8 +132,6 @@
         transform 0.25s ease,
         box-shadow 0.25s ease,
         border-color 0.25s ease;
-      position: relative;
-      overflow: hidden;
     }
 
     .tool-card:hover {
@@ -182,6 +182,75 @@
       transform: translateX(4px);
     }
 
+    /* LAWS SECTION */
+
+    .laws-section {
+      margin-top: 65px;
+      padding-top: 45px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .law-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .law-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 22px;
+      text-decoration: none;
+      color: inherit;
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .law-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 35px rgba(31, 41, 55, 0.09);
+      border-color: #cddbf4;
+    }
+
+    .law-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      background: #f1f6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      margin-bottom: 18px;
+    }
+
+    .law-card h3 {
+      font-size: 18px;
+      margin-bottom: 9px;
+    }
+
+    .law-card p {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.55;
+      flex-grow: 1;
+    }
+
+    .law-card span {
+      margin-top: 18px;
+      color: #315fa8;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* COMING SOON */
+
     .coming-soon {
       margin-top: 34px;
       background: white;
@@ -216,11 +285,17 @@
 
     footer {
       max-width: 1100px;
-      margin: 35px auto 0;
+      margin: 10px auto 0;
       padding: 25px 30px 35px;
       text-align: center;
       color: #9ca3af;
       font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .law-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 750px) {
@@ -244,11 +319,13 @@
         font-size: 15px;
       }
 
-      .tools-grid {
+      .tools-grid,
+      .law-grid {
         grid-template-columns: 1fr;
       }
 
-      .tool-card {
+      .tool-card,
+      .law-card {
         min-height: auto;
       }
 
@@ -276,6 +353,8 @@
 
   <main class="page">
 
+    <!-- HERO -->
+
     <section class="hero">
 
       <div class="badge">
@@ -287,13 +366,14 @@
       </h1>
 
       <p>
-        Select the tool you would like to use.
-        All tools are available from one central portal and will always reflect
-        the latest available version.
+        Access useful HR tools, important laws and regulations
+        from one central portal.
       </p>
 
     </section>
 
+
+    <!-- AVAILABLE TOOLS -->
 
     <section>
 
@@ -302,10 +382,7 @@
         <p>Select an application below to continue.</p>
       </div>
 
-
       <div class="tools-grid">
-
-        <!-- MOHRE TOOL -->
 
         <a href="./mohre.html" class="tool-card">
 
@@ -313,9 +390,7 @@
             👷
           </div>
 
-          <h3>
-            MOHRE Skilled / Unskilled
-          </h3>
+          <h3>MOHRE Skilled / Unskilled</h3>
 
           <p>
             Search job titles and identify the relevant MOHRE classification,
@@ -330,17 +405,13 @@
         </a>
 
 
-        <!-- GRATUITY TOOL -->
-
         <a href="./gratuity.html" class="tool-card">
 
           <div class="icon-box">
             🧮
           </div>
 
-          <h3>
-            Gratuity Calculator
-          </h3>
+          <h3>Gratuity Calculator</h3>
 
           <p>
             Calculate employee gratuity using the relevant employment details,
@@ -360,17 +431,125 @@
       <div class="coming-soon">
 
         <div>
-          <strong>More tools can be added here</strong>
+          <strong>More HR tools coming soon</strong>
 
           <p>
-            Additional HR, finance, tax and internal productivity applications
-            can be incorporated into this portal in the future.
+            Additional HR calculators and productivity tools can be
+            incorporated into this portal.
           </p>
         </div>
 
         <div class="small-badge">
           Expandable Portal
         </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LAWS & REGULATIONS -->
+
+    <section class="laws-section">
+
+      <div class="section-title">
+        <h2>Know the Laws & Regulations</h2>
+        <p>
+          Access important UAE employment laws, regulations and guidance documents.
+        </p>
+      </div>
+
+
+      <div class="law-grid">
+
+        <a href="./documents/Core-Laws/" class="law-card">
+
+          <div class="law-icon">📘</div>
+
+          <h3>Core Laws</h3>
+
+          <p>
+            UAE Labour Law and the main regulations governing employment relationships.
+          </p>
+
+          <span>View Documents →</span>
+
+        </a>
+
+
+        <a href="./documents/DIFC-Law/" class="law-card">
+
+          <div class="law-icon">⚖️</div>
+
+          <h3>DIFC Law</h3>
+
+          <p>
+            Employment laws and regulations applicable within the DIFC.
+          </p>
+
+          <span>View Documents →</span>
+
+        </a>
+
+
+        <a href="./documents/Domestic-Workers/" class="law-card">
+
+          <div class="law-icon">🏠</div>
+
+          <h3>Domestic Workers</h3>
+
+          <p>
+            Laws and regulations governing domestic workers in the UAE.
+          </p>
+
+          <span>View Documents →</span>
+
+        </a>
+
+
+        <a href="./documents/Occupational-Health-Safety-Accommodation/" class="law-card">
+
+          <div class="law-icon">🦺</div>
+
+          <h3>Health, Safety & Accommodation</h3>
+
+          <p>
+            Workplace health, occupational safety and employee accommodation requirements.
+          </p>
+
+          <span>View Documents →</span>
+
+        </a>
+
+
+        <a href="./documents/Pension-Laws/" class="law-card">
+
+          <div class="law-icon">🏦</div>
+
+          <h3>Pension Laws</h3>
+
+          <p>
+            Pension laws, regulations and guidance applicable to UAE Nationals.
+          </p>
+
+          <span>View Documents →</span>
+
+        </a>
+
+
+        <a href="./documents/Work-Permit/" class="law-card">
+
+          <div class="law-icon">📄</div>
+
+          <h3>Work Permit</h3>
+
+          <p>
+            Work permit requirements, classifications and related employment guidance.
+          </p>
+
+          <span>View Documents →</span>
+
+        </a>
 
       </div>
 
