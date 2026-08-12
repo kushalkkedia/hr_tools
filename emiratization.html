@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emiratization Calculator</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f6f8fb;--panel:#fff;--text:#1f2937;--muted:#667085;--border:#e5e7eb;
+  --blue:#315fa8;--blue-soft:#eef4ff;--green:#18794e;--green-soft:#edf8f2;
+  --amber:#9a6700;--amber-soft:#fff7e8;--red:#b42318;--red-soft:#fff1f0;
+  --shadow:0 12px 30px rgba(31,41,55,.07)
+}
+body{font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f8fbff 0%,var(--bg) 100%);color:var(--text);min-height:100vh}
+.page{max-width:1180px;margin:auto;padding:34px 24px 60px}
+.topline{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:24px}
+.back,.updated{background:#fff;border:1px solid var(--border);padding:9px 13px;font-size:13px}
+.back{border-radius:10px;text-decoration:none;color:var(--blue);font-weight:700}
+.updated{border-radius:999px;color:#64748b}
+.hero{padding:34px;border:1px solid #e7edf5;border-radius:24px;background:radial-gradient(circle at 12% 10%,rgba(49,95,168,.10),transparent 30%),#fff;box-shadow:var(--shadow);margin-bottom:24px}
+.eyebrow{display:inline-block;padding:6px 11px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
+h1{font-size:clamp(30px,5vw,42px);letter-spacing:-1px;margin-bottom:10px}
+.hero p{color:var(--muted);line-height:1.65;max-width:880px;font-size:15px}
+.layout{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.card-header{padding:20px 22px 16px;border-bottom:1px solid var(--border)}
+.card-header h2{font-size:19px;margin-bottom:5px}.card-header p{color:var(--muted);font-size:13px;line-height:1.5}
+.card-body{padding:22px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:7px}.full{grid-column:1/-1}
+label{font-size:13px;font-weight:700;color:#344054}
+input,select{width:100%;border:1px solid #d7dee8;border-radius:11px;padding:11px 12px;font:inherit;background:#fff;color:var(--text)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(49,95,168,.10)}
+.hint{color:var(--muted);font-size:11.5px;line-height:1.45}
+.rule-box{margin-top:18px;padding:14px 15px;border-radius:13px;background:#f8fafc;border:1px solid var(--border);font-size:12.5px;line-height:1.6;color:#475467}
+.result{position:sticky;top:18px}
+.result-top{padding:22px;background:linear-gradient(180deg,#f6f9ff 0%,#fff 100%);border-bottom:1px solid var(--border)}
+.result-label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.status{font-size:28px;font-weight:800;color:#173d77;margin-bottom:7px}
+.sub{font-size:13px;color:var(--muted);line-height:1.5}
+.metrics{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
+.metric{padding:16px 18px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.metric:nth-child(2n){border-right:0}.metric:nth-last-child(-n+2){border-bottom:0}
+.metric span{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}.metric strong{font-size:20px}
+.notice{margin:16px 22px 0;padding:13px 14px;border-radius:12px;font-size:12.5px;line-height:1.55}
+.good{background:var(--green-soft);color:var(--green);border:1px solid #d7efe3}
+.warn{background:var(--amber-soft);color:#7a4700;border:1px solid #f1dfb9}
+.bad{background:var(--red-soft);color:var(--red);border:1px solid #f1d0ce}
+.sensitivity{margin-top:22px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{padding:11px 10px;border-bottom:1px solid var(--border);text-align:center;white-space:nowrap}
+th{background:#f8fafc;color:#475467;font-size:11.5px}
+td:first-child,th:first-child{text-align:left}
+.current-row{background:#f5f9ff;font-weight:700}
+.badge{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:800}
+.badge.good{border:none}.badge.bad{border:none}.badge.warn{border:none}
+.rules{margin-top:22px}
+.rules ul{margin:10px 0 0 20px;color:#475467;font-size:13px;line-height:1.7}
+.rules li{margin-bottom:6px}
+.footer{margin-top:24px;text-align:center;color:#98a2b3;font-size:11.5px}
+@media(max-width:950px){.layout{grid-template-columns:1fr}.result{position:static}}
+@media(max-width:700px){.page{padding:20px 15px 40px}.topline{flex-direction:column;align-items:flex-start}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.hero{padding:26px 20px}.metrics{grid-template-columns:1fr}.metric{border-right:0}}
+</style>
+</head>
+<body>
+<main class="page">
+
+<div class="topline">
+  <a href="./index.html" class="back">← Back to Home</a>
+  <div class="updated">Last updated: August 2026</div>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">HR Digital Tools</div>
+  <h1>Emiratization Calculator</h1>
+  <p>
+    Enter the figures from the Tawteen report to assess the current Emiratization position,
+    the applicable requirement and the impact of changes in skilled employees on the half-year targets.
+    Each branch should be assessed separately.
+  </p>
+</section>
+
+<div class="layout">
+
+<section class="card">
+  <div class="card-header">
+    <h2>Tawteen report figures</h2>
+    <p>Use the establishment / branch figures shown in the Tawteen report.</p>
+  </div>
+
+  <div class="card-body">
+    <div class="form-grid">
+
+      <div class="field full">
+        <label for="unitName">Unit / Branch Name</label>
+        <input id="unitName" type="text" placeholder="Optional">
+        <span class="hint">Branches are treated as separate units for Emiratization calculations.</span>
+      </div>
+
+      <div class="field">
+        <label for="totalEmployees">Total Employees</label>
+        <input id="totalEmployees" type="number" min="0" value="509">
+      </div>
+
+      <div class="field">
+        <label for="totalUAE">Total UAE Employees</label>
+        <input id="totalUAE" type="number" min="0" value="3">
+      </div>
+
+      <div class="field">
+        <label for="totalNonUAE">Total Non-UAE Employees</label>
+        <input id="totalNonUAE" type="number" min="0" value="506">
+      </div>
+
+      <div class="field">
+        <label for="totalSkilled">Total Skilled Employees</label>
+        <input id="totalSkilled" type="number" min="0" value="27">
+      </div>
+
+      <div class="field">
+        <label for="skilledUAE">Skilled UAE National Employees</label>
+        <input id="skilledUAE" type="number" min="0" value="3">
+        <span class="hint">Editable input from the Tawteen report. The sensitivity analysis and additional UAE National requirement are based on Total UAE Employees, not this field.</span>
+      </div>
+
+      <div class="field">
+        <label for="skilledNonUAE">Skilled Non-UAE Employees</label>
+        <input id="skilledNonUAE" type="number" min="0" value="24">
+      </div>
+
+      <div class="field">
+        <label for="priorYearPct">Last Year Emiratization Percentage (%)</label>
+        <input id="priorYearPct" type="number" min="0" step="0.01" value="13.79">
+        <span class="hint">Enter the final Emiratization percentage achieved in the previous year.</span>
+      </div>
+
+      <div class="field">
+        <label for="h1TargetInput">H1 Current Year Target (%)</label>
+        <input id="h1TargetInput" type="number" min="0" step="0.01" value="14.79">
+        <span class="hint">Current year first-half target. Editable if the Tawteen target differs.</span>
+      </div>
+
+      <div class="field">
+        <label for="h2TargetInput">H2 Current Year Target (%)</label>
+        <input id="h2TargetInput" type="number" min="0" step="0.01" value="15.79">
+        <span class="hint">Current year second-half target. Editable if the Tawteen target differs.</span>
+      </div>
+
+      <div class="field">
+        <label for="analysisHalf">Analysis Period</label>
+        <select id="analysisHalf">
+          <option value="H1">H1 - First Half of the Year</option>
+          <option value="H2" selected>H2 - Second Half of the Year</option>
+        </select>
+        <span class="hint">Sensitivity analysis will be prepared for the selected half-year.</span>
+      </div>
+
+    </div>
+
+    <div class="rule-box">
+      <strong>Skilled employee test for non-UAE employees:</strong> both conditions must be satisfied —
+      MOHRE skill category <strong>1 to 5</strong> and salary of <strong>AED 4,000 or more</strong>.
+      If either condition is not met, the employee is treated as unskilled.
+      <strong>All UAE Nationals are counted as skilled employees</strong> for the Emiratization calculation.
+    </div>
+  </div>
+</section>
+
+<aside class="card result">
+  <div class="result-top">
+    <div class="result-label">Current Emiratization Position</div>
+    <div class="status" id="statusText">Calculating...</div>
+    <div class="sub" id="statusSub"></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><span>Current Emiratization %</span><strong id="currentPct">0.00%</strong></div>
+    <div class="metric"><span>Employee Band</span><strong id="employeeBand">-</strong></div>
+    <div class="metric"><span>H1 Target</span><strong id="h1Target">-</strong></div>
+    <div class="metric"><span>H2 Target</span><strong id="h2Target">-</strong></div>
+    <div class="metric"><span>H1 UAE Nationals Required</span><strong id="h1Required">-</strong></div>
+    <div class="metric"><span>H2 UAE Nationals Required</span><strong id="h2Required">-</strong></div>
+    <div class="metric" style="grid-column:1/-1;border-right:0;border-bottom:0;background:#f8fafc">
+      <span>Additional UAE Nationals Required - Selected Period</span>
+      <strong id="additionalRequired" style="color:#173d77">-</strong>
+    </div>
+  </div>
+
+  <div class="notice good" id="requirementNotice"></div>
+  <div class="notice warn" id="dataNotice"></div>
+  <div style="height:18px"></div>
+</aside>
+
+</div>
+
+<section class="card sensitivity">
+  <div class="card-header">
+    <h2>Sensitivity Analysis - <span id="sensitivityHalf">H2</span></h2>
+    <p>
+      Shows how the Emiratization requirement changes when the number of skilled employees increases or decreases, while comparing the requirement against the actual Total UAE Nationals working in the unit.
+    </p>
+  </div>
+  <div class="card-body table-wrap">
+    <table id="sensitivityTable">
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Skilled Employees</th>
+          <th>Total UAE Nationals</th>
+          <th>Target %</th>
+          <th>Required UAE Nationals</th>
+          <th>Additional UAE Nationals Required</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card rules">
+  <div class="card-header">
+    <h2>Key Rules</h2>
+    <p>Rules used by this calculator.</p>
+  </div>
+  <div class="card-body">
+    <ul>
+      <li><strong>Skilled non-UAE employee:</strong> MOHRE skill category must be 1-5 <strong>and</strong> salary must be AED 4,000 or more.</li>
+      <li><strong>All UAE Nationals are generally counted as skilled employees</strong>; however, the Skilled UAE National Employees field remains editable so the calculator can follow the Tawteen report exactly.</li>
+      <li>Example: salary AED 20,000 + skill category 6 = <strong>Unskilled</strong>.</li>
+      <li>Example: salary AED 3,000 + skill category 1 = <strong>Unskilled</strong>.</li>
+      <li>Example: salary AED 20,000 + skill category 1 = <strong>Skilled</strong>.</li>
+      <li><strong>0-19 total employees:</strong> no Emiratization requirement.</li>
+      <li><strong>20-49 total employees:</strong> requirement is <strong>1 UAE National for the full year</strong>. The same annual requirement applies whether reviewing H1 or H2.</li>
+      <li><strong>50 or more total employees:</strong> target is based on skilled employees.</li>
+      <li>The normal current-year targets are <strong>last year Emiratization percentage + 1%</strong> for H1 and <strong>last year Emiratization percentage + 2%</strong> for H2. Both H1 and H2 targets remain editable so the figures can follow the Tawteen report exactly.</li>
+      <li>For establishments with 50 or more employees, sensitivity is prepared for the selected half-year and compares the calculated requirement against the <strong>Total UAE Nationals</strong> working in the unit, not only Skilled UAE Nationals.</li>
+      <li>Branches are treated as separate units for Emiratization calculations.</li>
+      <li>The Tawteen report figures should be reviewed before relying on the result.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="footer">
+  For internal estimation and sensitivity analysis. Final compliance should be checked against the applicable Tawteen / MOHRE records.
+</div>
+
+</main>
+
+<script>
+(function(){
+
+const els = {
+  totalEmployees: document.getElementById('totalEmployees'),
+  totalUAE: document.getElementById('totalUAE'),
+  totalNonUAE: document.getElementById('totalNonUAE'),
+  totalSkilled: document.getElementById('totalSkilled'),
+  skilledUAE: document.getElementById('skilledUAE'),
+  skilledNonUAE: document.getElementById('skilledNonUAE'),
+  priorYearPct: document.getElementById('priorYearPct'),
+  h1TargetInput: document.getElementById('h1TargetInput'),
+  h2TargetInput: document.getElementById('h2TargetInput'),
+  analysisHalf: document.getElementById('analysisHalf')
+};
+
+function n(id){ return Math.max(0, Number(els[id].value) || 0); }
+function pct(x){ return Number(x).toFixed(2) + '%'; }
+function ceilReq(skilled, targetPct){
+  if(skilled <= 0 || targetPct <= 0) return 0;
+  return Math.ceil((skilled * targetPct / 100) - 1e-9);
+}
+
+function calculate(){
+
+
+  const totalEmployees = n('totalEmployees');
+  const totalUAE = n('totalUAE');
+  const totalNonUAE = n('totalNonUAE');
+  const skilled = n('totalSkilled');
+  const skilledUAE = n('skilledUAE');
+  const skilledNonUAE = n('skilledNonUAE');
+  const prior = Number(els.priorYearPct.value) || 0;
+  const half = els.analysisHalf.value;
+
+  const current = skilled > 0 ? (totalUAE / skilled) * 100 : 0;
+  document.getElementById('currentPct').textContent = pct(current);
+
+  let band, h1Pct = null, h2Pct = null, h1Req = null, h2Req = null;
+  let status = '', sub = '', notice = '';
+
+  if(totalEmployees <= 19){
+    band = '0-19';
+    status = 'No Emiratization Requirement';
+    sub = 'Based on the total employee count entered.';
+    notice = 'This establishment falls in the 0-19 employee band. No Emiratization requirement is applied.';
+  } else if(totalEmployees <= 49){
+    band = '20-49';
+    status = totalUAE >= 1 ? 'Requirement Currently Met' : '1 UAE National Required';
+    sub = 'Requirement is 1 UAE National for the full year.';
+    h1Req = 1;
+    h2Req = 1;
+    notice = totalUAE >= 1
+      ? 'The full-year requirement of 1 UAE National is currently met.'
+      : 'The full-year requirement is 1 UAE National. Based on the entered figures, 1 additional UAE National is required.';
+  } else {
+    band = '50+';
+    h1Pct = Math.max(0, Number(els.h1TargetInput.value) || 0);
+    h2Pct = Math.max(0, Number(els.h2TargetInput.value) || 0);
+    h1Req = ceilReq(skilled, h1Pct);
+    h2Req = ceilReq(skilled, h2Pct);
+
+    const selectedReq = half === 'H1' ? h1Req : h2Req;
+    const selectedTarget = half === 'H1' ? h1Pct : h2Pct;
+    const selectedGap = Math.max(0, selectedReq - totalUAE);
+
+    if(selectedGap === 0){
+      status = half + ' Target Currently Met';
+      sub = 'Based on ' + pct(selectedTarget) + ' applied to the current skilled employee population.';
+    } else {
+      status = selectedGap + ' Additional Skilled UAE ' + (selectedGap === 1 ? 'National' : 'Nationals') + ' Required';
+      sub = 'Based on the ' + half + ' target and current skilled employee population.';
+    }
+
+    notice = 'For 50+ employees, the calculator uses the H1 and H2 target percentages entered above. Sensitivity below is based on ' + half + '.';
+  }
+
+  document.getElementById('employeeBand').textContent = band;
+  document.getElementById('h1Target').textContent = h1Pct === null ? (band==='20-49' ? '1 for full year' : 'N/A') : pct(h1Pct);
+  document.getElementById('h2Target').textContent = h2Pct === null ? (band==='20-49' ? '1 for full year' : 'N/A') : pct(h2Pct);
+  document.getElementById('h1Required').textContent = h1Req === null ? 'N/A' : h1Req;
+  document.getElementById('h2Required').textContent = h2Req === null ? 'N/A' : h2Req;
+
+  let additionalRequired = 0;
+  if (band === '20-49') {
+    additionalRequired = Math.max(0, 1 - totalUAE);
+  } else if (band === '50+') {
+    const selectedReq = half === 'H1' ? h1Req : h2Req;
+    additionalRequired = Math.max(0, selectedReq - totalUAE);
+  }
+  document.getElementById('additionalRequired').textContent =
+    band === '0-19' ? '0' : additionalRequired;
+
+  document.getElementById('statusText').textContent = status;
+  document.getElementById('statusSub').textContent = sub;
+  document.getElementById('requirementNotice').textContent = notice;
+  document.getElementById('sensitivityHalf').textContent = half;
+
+  const mismatches = [];
+
+  if(Math.round(totalUAE + totalNonUAE) !== Math.round(totalEmployees)){
+    mismatches.push('Total UAE + Non-UAE employees does not equal Total Employees.');
+  }
+
+  if(Math.round(skilledUAE + skilledNonUAE) !== Math.round(skilled)){
+    mismatches.push('Skilled UAE + Skilled Non-UAE employees does not equal Total Skilled Employees.');
+  }
+
+  if(skilled > totalEmployees){
+    mismatches.push('Total Skilled Employees cannot exceed Total Employees.');
+  }
+
+  document.getElementById('dataNotice').textContent =
+    mismatches.length ? mismatches.join(' ') : 'Entered employee totals are internally consistent.';
+
+  buildSensitivity(totalEmployees, skilled, totalUAE, half);
+}
+
+function buildSensitivity(totalEmployees, skilled, totalUAE, half){
+
+  const tbody = document.querySelector('#sensitivityTable tbody');
+  tbody.innerHTML = '';
+
+  if(totalEmployees < 50){
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td colspan="7" style="text-align:center;color:#667085;padding:22px">Sensitivity analysis is shown only for establishments with 50 or more employees.</td>';
+    tbody.appendChild(tr);
+    return;
+  }
+
+  const targetPct = half === 'H1' ? Math.max(0, Number(els.h1TargetInput.value) || 0) : Math.max(0, Number(els.h2TargetInput.value) || 0);
+  const currentSkilled = Math.max(0, Math.round(skilled));
+
+  // Show a practical range around the current skilled population:
+  // reductions down to zero, and increases up to +20 skilled employees.
+  const scenarios = [];
+
+  for(let s = 0; s <= currentSkilled; s++){
+    scenarios.push({
+      label: s === currentSkilled ? 'Current' : '-' + (currentSkilled - s),
+      skilled: s
+    });
+  }
+
+  for(let add = 1; add <= 20; add++){
+    scenarios.push({
+      label: '+' + add,
+      skilled: currentSkilled + add
+    });
+  }
+
+  scenarios.forEach(sc => {
+    const required = ceilReq(sc.skilled, targetPct);
+    const gap = Math.max(0, required - totalUAE);
+
+    const tr = document.createElement('tr');
+    if(sc.label === 'Current') tr.className = 'current-row';
+
+    let status;
+    if(required === 0){
+      status = '<span class="badge good">Requirement = 0</span>';
+    } else if(gap === 0){
+      status = '<span class="badge good">Target Met</span>';
+    } else {
+      status = '<span class="badge bad">Short by ' + gap + '</span>';
+    }
+
+    tr.innerHTML = `
+      <td>${sc.label}</td>
+      <td>${sc.skilled}</td>
+      <td>${totalUAE}</td>
+      <td>${pct(targetPct)}</td>
+      <td>${required}</td>
+      <td>${gap}</td>
+      <td>${status}</td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+Object.values(els).forEach(el=>{
+  el.addEventListener('input', calculate);
+  el.addEventListener('change', calculate);
+});
+
+calculate();
+
+})();
+</script>
+
+</body>
+</html>
